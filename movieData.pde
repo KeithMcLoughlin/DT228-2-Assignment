@@ -35,7 +35,7 @@ void draw()
   
   drawAxis(border, horInterval, verInterval, horRange, horGap, verRange, verGap, tick);
   drawTrendGraph(grossDataset, border);
-  drawText(grossDataset, "(in millions)", verInterval, horInterval, border, tick, verGap, horGap, roundUp((int)(calculateMax(grossDataset) / 1000000.0f)));    //makes the values on the vertical axis in millions 
+  drawText(grossDataset, "(in millions)", verInterval, horInterval, border, tick, verGap, horGap, (calculateMax(grossDataset) / 1000000.0f));    //makes the values on the vertical axis in millions 
 }
 
 void loadMovieDetailsData()
@@ -153,25 +153,25 @@ float calculateMax(ArrayList<Integer> data)
     return max;
 }
 
-void drawText(ArrayList<Integer> data, String verTitle, int verticalIntervals, int horizontalIntervals, float border, float tickSize, float verticalGap, float horizontalGap, int maxDataValue)
+void drawText(ArrayList<Integer> data, String verTitle, int verticalIntervals, int horizontalIntervals, float border, float tickSize, float verticalGap, float horizontalGap, float maxDataValue)
 {
   fill(0);
-  int verticalDataGap = maxDataValue / verticalIntervals;
+  float verticalDataGap = maxDataValue / verticalIntervals;
   
   for (int i = 0 ; i <= verticalIntervals ; i ++)
   {
     float y = (height - border) - (i * verticalGap);
-    int label = verticalDataGap * i;
+    int verLabel = (int)verticalDataGap * i;
 
     textAlign(RIGHT, CENTER);
     textSize(12);
-    text(label, border - (tickSize * 2.0f), y);
+    text(verLabel, border - (tickSize * 2.0f), y);
   }
   
   for (int i = 0 ; i <=  horizontalIntervals; i ++)
   {
     float x = border + (i * horizontalGap);
-    float textY = height - (border * 0.5f);
+    float horLabel = height - (border * 0.5f);
   }
   
   pushMatrix();
@@ -180,9 +180,4 @@ void drawText(ArrayList<Integer> data, String verTitle, int verticalIntervals, i
   rotate(-HALF_PI);
   text(verTitle, 0, 0);
   popMatrix();
-}
-
-int roundUp(int num)
-{
-     return (10 - num % 10) + num;
 }
