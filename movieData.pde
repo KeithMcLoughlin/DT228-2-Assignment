@@ -22,7 +22,7 @@ void setup()
 void draw()
 {
   float border = 0.1 * height;
-  int horInterval = grossDataset.size(), verInterval = 20;
+  int horInterval = audienceDataset.size(), verInterval = 10;
   float tick = border * 0.1f;
   
   //horizonal axis variables
@@ -34,8 +34,9 @@ void draw()
   float verGap = verRange / verInterval;
   
   drawAxis(border, horInterval, verInterval, horRange, horGap, verRange, verGap, tick);
-  drawTrendGraph(grossDataset, border);
-  drawText(grossDataset, "(in millions)", verInterval, horInterval, border, tick, verGap, horGap, (calculateMax(grossDataset) / 1000000.0f));    //makes the values on the vertical axis in millions 
+  drawTrendGraph(audienceDataset, border, color(255, 0, 0));
+  drawTrendGraph(criticDataset, border, color(0, 0, 255));
+  drawText(audienceDataset, "(audience ratings)", verInterval, horInterval, border, tick, verGap, horGap, 100); 
 }
 
 void loadMovieDetailsData()
@@ -73,11 +74,12 @@ void loadGrossData()
     String[] data = s.split(",");
     
     //loading in budget
-    int budget = Integer.parseInt(data[0]);  //takes in the first column which is budget
+    int budget = Integer.parseInt(data[0]) / 100000;  //takes in the first column which is budget (in 100 thousands)
     budgetDataset.add(budget);
  
     //loading in gross
-    int gross = Integer.parseInt(data[1]);  //takes in the second column which is gross earnings
+    long g = Long.parseLong(data[1]) / 1000000;  //takes in the second column which is gross earnings (in millions)
+    int gross = (int) g;
     grossDataset.add(gross);
   }
 }
@@ -124,11 +126,11 @@ void drawAxis(float border, int horizontalIntervals, int verticalIntervals, floa
   }
 }
 
-void drawTrendGraph(ArrayList<Integer> data, float border)
+void drawTrendGraph(ArrayList<Integer> data, float border, color c)
 {
   float maxValue = calculateMax(data);
   
-  stroke(255, 0, 0);
+  stroke(c);
   for (int i = 1; i < data.size(); i++)
   {
     float x1 = map(i-1, 0, data.size(), border, width - border);
