@@ -1,12 +1,5 @@
-//array lists that hold all the different data types
-ArrayList<Integer> yearDataset = new ArrayList<Integer>();
-ArrayList<String> titleDataset = new ArrayList<String>();
-ArrayList<String> genreDataset = new ArrayList<String>();
-ArrayList<Integer> runtimeDataset = new ArrayList<Integer>();
-ArrayList<Integer> budgetDataset = new ArrayList<Integer>();
-ArrayList<Integer> grossDataset = new ArrayList<Integer>();
-ArrayList<Integer> criticDataset = new ArrayList<Integer>();
-ArrayList<Integer> audienceDataset = new ArrayList<Integer>();
+//array list that hold all the different data types
+ArrayList<Movie> movies = new ArrayList<Movie>();
 
 void setup()
 {
@@ -14,15 +7,13 @@ void setup()
   background(255);
   
   //load in datasets from files
-  loadMovieDetailsData();
-  loadGrossData();
-  loadRatingData();
+  loadMovieData();
 }
 
 void draw()
 {
   float border = 0.1 * height;
-  int horInterval = audienceDataset.size(), verInterval = 10;
+  int horInterval = movies.size(), verInterval = 10;
   float tick = border * 0.1f;
   
   //horizonal axis variables
@@ -33,72 +24,25 @@ void draw()
   float verRange = height - (border * 2.0f);
   float verGap = verRange / verInterval;
   
+  ArrayList<Integer> data = new ArrayList<Integer>();
+  for(int i = 0; i < movies.size(); i++)
+  {
+    int m = movies.get(i).gross;
+    data.add(m);
+  }
+  
   drawAxis(border, horInterval, verInterval, horRange, horGap, verRange, verGap, tick);
-  drawTrendGraph(audienceDataset, border, color(255, 0, 0));
-  drawTrendGraph(criticDataset, border, color(0, 0, 255));
-  drawText(audienceDataset, "(audience ratings)", verInterval, horInterval, border, tick, verGap, horGap, 100); 
+  drawTrendGraph(data, border, color(255, 0, 0));
+  drawText(data, "(in millions)", "Movie Titles", verInterval, horInterval, border, tick, verGap, horGap); 
 }
 
-void loadMovieDetailsData()
+void loadMovieData()
 {
-  String[] lines = loadStrings("movieDetails.csv");
+  String[] lines = loadStrings("movie_details.csv");
   for (String s : lines) 
   {
-    //split the data where there are comas
-    String[] data = s.split(",");
-    
-    //loading in years
-    int year = Integer.parseInt(data[0]);  //takes in the first column which is years
-    yearDataset.add(year);
- 
-    //loading in titles
-    String title = data[1];  //takes in the second column which is titles
-    titleDataset.add(title);
-    
-    //loading in genre
-    String genre = data[2];  //takes in the third column which is genre
-    genreDataset.add(title);
-    
-    //loading in runtime
-    int runtime = Integer.parseInt(data[3]);  //takes in the fourth column which is runtime
-    runtimeDataset.add(runtime);
-  }
-}
-
-void loadGrossData()
-{
-  String[] lines = loadStrings("gross.csv");
-  for (String s : lines) 
-  {
-    //split the data where there are comas
-    String[] data = s.split(",");
-    
-    //loading in budget
-    int budget = Integer.parseInt(data[0]) / 100000;  //takes in the first column which is budget (in 100 thousands)
-    budgetDataset.add(budget);
- 
-    //loading in gross
-    long g = Long.parseLong(data[1]) / 1000000;  //takes in the second column which is gross earnings (in millions)
-    int gross = (int) g;
-    grossDataset.add(gross);
-  }
-}
-
-void loadRatingData()
-{
-  String[] lines = loadStrings("rating.csv");
-  for (String s : lines) 
-  {
-    //split the data where there are comas
-    String[] data = s.split(",");
-    
-    //loading in critic rating
-    int critic = Integer.parseInt(data[0]);  //takes in the first column which is critic ratings
-    criticDataset.add(critic);
- 
-    //loading in audience rating
-    int aud = Integer.parseInt(data[1]);  //takes in the second column which is audience ratings
-    audienceDataset.add(aud);
+     Movie m = new Movie(s);
+     movies.add(m);
   }
 }
 
@@ -155,9 +99,10 @@ float calculateMax(ArrayList<Integer> data)
     return max;
 }
 
-void drawText(ArrayList<Integer> data, String verTitle, int verticalIntervals, int horizontalIntervals, float border, float tickSize, float verticalGap, float horizontalGap, float maxDataValue)
+void drawText(ArrayList<Integer> data, String verTitle, String horTitle, int verticalIntervals, int horizontalIntervals, float border, float tickSize, float verticalGap, float horizontalGap)
 {
   fill(0);
+  float maxDataValue = calculateMax(data);
   float verticalDataGap = maxDataValue / verticalIntervals;
   
   for (int i = 0 ; i <= verticalIntervals ; i ++)
@@ -176,6 +121,7 @@ void drawText(ArrayList<Integer> data, String verTitle, int verticalIntervals, i
     float horLabel = height - (border * 0.5f);
   }
   
+  text(horTitle, width * 0.5f, height - (border * 0.5f));
   pushMatrix();
   translate(7, height/3);
   textSize(15);
