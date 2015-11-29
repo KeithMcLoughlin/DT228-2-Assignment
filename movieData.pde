@@ -32,7 +32,8 @@ void draw()
   }
   
   drawAxis(border, horInterval, verInterval, horRange, horGap, verRange, verGap, tick);
-  drawTrendGraph(data, border, color(255, 0, 0));
+  //drawTrendGraph(data, border, color(255, 0, 0));
+  drawBarChart(data, border, horRange, verRange);
   drawText(data, "(in millions)", "Movie Titles", verInterval, horInterval, border, tick, verGap, horGap); 
 }
 
@@ -128,4 +129,21 @@ void drawText(ArrayList<Integer> data, String verTitle, String horTitle, int ver
   rotate(-HALF_PI);
   text(verTitle, 0, 0);
   popMatrix();
+}
+
+void drawBarChart(ArrayList<Integer> data, float border, float horizontalRange, float verticalRange)
+{
+  float maxValue = calculateMax(data);
+  float rectWidth = (float) horizontalRange / data.size();
+  float ratio = verticalRange / maxValue;
+  float x = border;
+  
+  stroke(0);
+  fill(255, 255, 0);
+  
+  for(int i = 0; i < data.size(); i++)
+  {
+    rect(x, height - border, rectWidth, -(data.get(i) * ratio));
+    x += rectWidth;
+  }
 }
