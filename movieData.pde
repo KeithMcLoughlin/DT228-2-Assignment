@@ -16,36 +16,7 @@ void setup()
 void draw()
 { 
   background(255);
-  
-  if(keyPressed)
-  {
-    if(subOption > 0)
-    {
-      switch(key)
-      {
-        case '0': {subOption = 0; break;}
-      }
-    }
-    if(option > 0 && subOption == 0)
-    {
-      switch(key)
-      {
-        case '0': {option = 0; break;}
-        case '1': {subOption = 1; break;}
-        case '2': {subOption = 2; break;}
-        case '3': {subOption = 3; break;}
-      }
-    }
-    else
-    {
-      switch(key)
-      {
-        case '1': {option = 1; break;}
-        case '2': {option = 2; break;}
-        case '3': {option = 3; break;}
-      }
-    }
-  }
+
   switch(option)
   {
     case 0: {mainScreen(); break;}
@@ -66,11 +37,9 @@ void loadMovieData()
 
 void mainScreen()
 {
-  background(0);
-  fill(255, 0, 0);
-  text("Main", 100, 50);
-  text("1.Barchart", 100, 100);
-  text("2.Trend", 100, 150);
+  String[] options = {"1.Barchart", "2.Trend"};
+  Menu mainScreen = new Menu("Main", options, "menuBackground.jpg");
+  mainScreen.generate();
 }
 
 void option1()
@@ -134,4 +103,34 @@ void option2()
   g1.drawAxis();
   g1.drawText(data, "(in millions)", "gross");
   g1.drawTrendGraph(data, color(255, 0, 0));
+}
+
+void keyPressed()
+{
+    if(option > 0 && subOption == 0)
+    {
+      switch(key)
+      {
+        case '0': {option = 0; break;}
+        case '1': {subOption = 1; break;}
+        case '2': {subOption = 2; break;}
+        case '3': {subOption = 3; break;}
+      }
+    }
+    if(subOption > 0)
+    {
+      switch(key)
+      {
+        case '0': {subOption = 0; break;}
+      }
+    }
+    if(option == 0)
+    {
+      switch(key)
+      {
+        case '1': {option = 1; break;}
+        case '2': {option = 2; break;}
+        case '3': {option = 3; break;}
+      }
+    }
 }
