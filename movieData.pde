@@ -2,7 +2,7 @@
 ArrayList<Movie> movies = new ArrayList<Movie>();
 
 int option, subOption;
-String backImage;
+String backImage, graphImage;
 
 void setup()
 {
@@ -15,6 +15,7 @@ void setup()
   option = 0;
   subOption = 0;
   backImage = "menuBackground.jpg";
+  graphImage = "graphBackground.jpg";
 }
 
 void draw()
@@ -48,6 +49,7 @@ void mainScreen()
 
 void option1()
 {
+  PImage graphBack = loadImage(graphImage);
   switch(subOption)
   {
     case 0:
@@ -59,7 +61,7 @@ void option1()
     }
     case 1:
     {
-      background(255);
+      image(graphBack, 0, 0, width, height);
       ArrayList<Integer> data = new ArrayList<Integer>();
       for(int i = 0; i < movies.size(); i++)
       {
@@ -75,7 +77,7 @@ void option1()
     }
     case 2:
     {
-      background(255);
+      image(graphBack, 0, 0, width, height);
       ArrayList<Integer> data = new ArrayList<Integer>();
       for(int i = 0; i < movies.size(); i++)
       {

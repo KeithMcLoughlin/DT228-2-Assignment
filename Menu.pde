@@ -30,7 +30,7 @@ class Menu
     fill(#7B79FF);
     rect(mainLeftSpace, topSpace, boxW, boxH);
     fill(0);
-    textSize(50);
+    textSize(30);
     text(title, mainLeftSpace, topSpace, boxW, boxH);
     
     int counter = 0;
@@ -53,7 +53,7 @@ class Menu
       counter ++;
       if(counter == 2)
       {
-        optionGap += (height * 2.0f); 
+        optionGap += (height * 0.2f); 
         counter = 0;
       }
     }

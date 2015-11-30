@@ -35,12 +35,12 @@ class BarChart extends Graph
     }
   }
   
-  /*void comparisonBars(ArrayList<Integer> data, int startYear, int endYear)
+  void comparisonBars(ArrayList<Integer> data)
   {
     float maxValue = calculateMax(data);
     int intervals = endYear - startYear;
-    float rectWidth = (float) (horizontalRange / intervals) / 2;
-    float ratio = verticalRange / maxValue;
+    float rectWidth = (float) (horRange / intervals) / 2;
+    float ratio = verRange / maxValue;
     float x = border + (rectWidth/2);
     
     stroke(0);
@@ -51,5 +51,5 @@ class BarChart extends Graph
       rect(x, height - border, rectWidth, -(data.get(i) * ratio));
       x += (rectWidth * 2);
     }
-  }*/
+  }
 }
