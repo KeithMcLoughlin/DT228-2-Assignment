@@ -1,6 +1,9 @@
 //array list that hold all the different data types
 ArrayList<Movie> movies = new ArrayList<Movie>();
+
 int option, subOption;
+String backImage;
+
 void setup()
 {
   size(800, 600);
@@ -11,6 +14,7 @@ void setup()
   
   option = 0;
   subOption = 0;
+  backImage = "menuBackground.jpg";
 }
 
 void draw()
@@ -37,8 +41,8 @@ void loadMovieData()
 
 void mainScreen()
 {
-  String[] options = {"1.Barchart", "2.Trend"};
-  Menu mainScreen = new Menu("Main", options, "menuBackground.jpg");
+  String[] options = {"1.Barchart", "2.Trend", "3.Area"};
+  Menu mainScreen = new Menu("Main", options, backImage);
   mainScreen.generate();
 }
 
@@ -48,10 +52,9 @@ void option1()
   {
     case 0:
     {
-      background(0);
-      text("Option1", 100, 50);
-      text("1.Gross", 100, 100);
-      text("2.Budget", 100, 150);
+      String[] options = {"1.Gross", "2.Budget"};
+      Menu optionScreen = new Menu("BarCharts", options, backImage);
+      optionScreen.generate();
       break;
     }
     case 1:
@@ -67,7 +70,7 @@ void option1()
       BarChart g1 = new BarChart();
       g1.drawAxis();
       g1.drawText(data, "(in millions)", "gross");
-      g1.drawBarChart(data, 0, 70, color(255, 0, 0));
+      g1.drawBarChart(data, color(255, 0, 0));
       break;
     }
     case 2:
@@ -83,7 +86,7 @@ void option1()
       BarChart g1 = new BarChart();
       g1.drawAxis();
       g1.drawText(data, "(in hundred thousands)", "budget");
-      g1.drawBarChart(data, 0, 70, color(255, 0, 0));
+      g1.drawBarChart(data, color(255, 0, 0));
       break;
     }
   }
@@ -91,18 +94,48 @@ void option1()
 
 void option2()
 {
-  background(255);
-  ArrayList<Integer> data = new ArrayList<Integer>();
-  for(int i = 0; i < movies.size(); i++)
+  switch(subOption)
   {
-    int m = movies.get(i).gross;
-    data.add(m);
+    case 0:
+    {
+      String[] options = {"1.Gross", "2.Budget"};
+      Menu optionScreen = new Menu("TrendGraphs", options, backImage);
+      optionScreen.generate();
+      break;
+    }
+    case 1:
+    {
+      background(255);
+      ArrayList<Integer> data = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).gross;
+        data.add(m);
+      }
+      
+      Trend g1 = new Trend();
+      g1.drawAxis();
+      g1.drawText(data, "(in millions)", "gross");
+      g1.drawTrendGraph(data, color(255, 0, 0));
+      break;
+    }
+    case 2:
+    {
+      background(255);
+      ArrayList<Integer> data = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).budget;
+        data.add(m);
+      }
+      
+      Trend g1 = new Trend();
+      g1.drawAxis();
+      g1.drawText(data, "(in hundred thousands)", "budget");
+      g1.drawTrendGraph(data, color(255, 0, 0));
+      break;
+    }
   }
-  
-  Trend g1 = new Trend();
-  g1.drawAxis();
-  g1.drawText(data, "(in millions)", "gross");
-  g1.drawTrendGraph(data, color(255, 0, 0));
 }
 
 void keyPressed()

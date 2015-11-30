@@ -1,13 +1,13 @@
 class Menu
 {
-  float mainLeftSpace = width * 0.4f;
-  float topSpace = height * 0.1f;
-  float optionGap = topSpace * 3.0f;
-  float leftSide = width * 0.1f;
-  float rightSide = width * 0.7f;
+  float mainLeftSpace = width * 0.33f;
+  float topSpace = height * 0.05f;
+  float optionGap = topSpace + (height * 0.2f);
+  float leftSide = width * 0.05f;
+  float rightSide = width * 0.62f;
   float side;
   
-  float boxW = width * 0.2f;
+  float boxW = width * 0.33f;
   float boxH = height * 0.1f;
   
   String title;
@@ -33,6 +33,7 @@ class Menu
     textSize(50);
     text(title, mainLeftSpace, topSpace, boxW, boxH);
     
+    int counter = 0;
     for(int i = 0; i < options.length; i++)
     {
       if(i % 2 == 0)
@@ -45,10 +46,16 @@ class Menu
       }
       
       fill(#7B79FF);
-      rect(side, optionGap * (i+1), boxW, boxH);
+      rect(side, optionGap, boxW, boxH);
       fill(0);
-      textSize(30);
-      text(options[i], side, optionGap * (i+1), boxW, boxH);
+      text(options[i], side, optionGap, boxW, boxH);
+      
+      counter ++;
+      if(counter == 2)
+      {
+        optionGap += (height * 2.0f); 
+        counter = 0;
+      }
     }
   }
 }

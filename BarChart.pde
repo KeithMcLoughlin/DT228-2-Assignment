@@ -1,11 +1,23 @@
 class BarChart extends Graph
 {
+  int startYear;
+  int endYear;
+  
   BarChart()
   {
     super();
+    startYear = 0;
+    endYear = 81;
   }
   
-  void drawBarChart(ArrayList<Integer> data, int startYear, int endYear, color c)
+  BarChart(int s, int e)
+  {
+    super();
+    startYear = s;
+    endYear = e;
+  }
+  
+  void drawBarChart(ArrayList<Integer> data, color c)
   {
     float maxValue = calculateMax(data);
     int intervals = endYear - startYear;
