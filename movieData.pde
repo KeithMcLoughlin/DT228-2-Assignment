@@ -153,10 +153,18 @@ void option1()
       //drawing the area
       case 3: 
       {
-        //area graph will go here
+        Area g1 = new Area();
+        g1.drawAxis();
+        g1.drawText(data, verTitle, mainTitle);
+        g1.drawAreaGraph(data, color(255, 0, 0));
         break;
       }
     }//end switch
+    textSize(15);
+    fill(0);
+    text("1.Trend Graph", width * 0.25f, height * 0.99f);
+    text("2.Bar Chart", width * 0.5f, height * 0.99f);
+    text("3.Area Graph", width * 0.75f, height * 0.99f);
   }//end if
 }//end option1()
 
@@ -254,7 +262,7 @@ void keyPressed()
         case '0': {subOption = 0; graphOption = 1; break;}
         case '1': {graphOption = 1; break;}
         case '2': {graphOption = 2; break;}
-        //case '3': {graphOption = 3; break;}
+        case '3': {graphOption = 3; break;}
       }
     }
     if(option == 0)
