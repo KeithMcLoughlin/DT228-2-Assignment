@@ -1,15 +1,18 @@
 class Trend extends Graph
 {
+  //default constructor
   Trend()
   {
     super(10, 10);
   }
   
+  //parameterised constructor (takes in the number of horizontal and vertical intervals for the graph)
   Trend(int hi, int vi)
   {
     super(hi, vi);
   }
   
+  //function which draws the trend lines of the trend graph
   void drawTrendGraph(ArrayList<Integer> data, color c)
   {
     float maxValue = calculateMax(data);

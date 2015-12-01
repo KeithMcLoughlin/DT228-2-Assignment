@@ -85,6 +85,14 @@ class Graph
     rotate(-HALF_PI);
     text(verTitle, 0, 0);
     popMatrix();
+    
+    //main title
+    fill(0);
+    rect(width * 0.33f, height * 0.01f, width * 0.33f, 50);
+    fill(#B814F5);
+    textSize(30);
+    textAlign(CENTER);
+    text(mainTitle, width * 0.33f, height * 0.01f, width * 0.33f, 50); 
   }
   
   float calculateMax(ArrayList<Integer> data)
