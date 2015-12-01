@@ -44,7 +44,7 @@ class BarChart extends Graph
     float x = border + (rectWidth/2);
     
     stroke(0);
-    fill(255, 0, 0);
+    fill(0, 255, 0);
     
     for(int i = startYear; i < endYear; i++)
     {

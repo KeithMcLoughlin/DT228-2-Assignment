@@ -1,7 +1,7 @@
 //array list that hold all the different data types
 ArrayList<Movie> movies = new ArrayList<Movie>();
 
-int option, subOption;
+int option, subOption, graphOption;
 String backImage, graphImage;
 
 void setup()
@@ -14,6 +14,7 @@ void setup()
   
   option = 0;
   subOption = 0;
+  graphOption = 1;
   backImage = "menuBackground.jpg";
   graphImage = "graphBackground.jpg";
 }
@@ -54,7 +55,7 @@ void option1()
   {
     case 0:
     {
-      String[] options = {"1.Gross", "2.Budget"};
+      String[] options = {"1.Gross", "2.Budget", "3.Compare"};
       Menu optionScreen = new Menu("BarCharts", options, backImage);
       optionScreen.generate();
       break;
@@ -89,6 +90,43 @@ void option1()
       g1.drawAxis();
       g1.drawText(data, "(in hundred thousands)", "budget");
       g1.drawBarChart(data, color(255, 0, 0));
+      break;
+    }
+    case 3:
+    {
+      image(graphBack, 0, 0, width, height);
+      int startYear = 0, endYear = 80;
+      switch(graphOption)
+      {
+        case 1: {startYear = 0; endYear = 10; break;}
+        case 2: {startYear = 11; endYear = 20; break;}
+        case 3: {startYear = 21; endYear = 30; break;}
+        case 4: {startYear = 31; endYear = 40; break;}
+        case 5: {startYear = 41; endYear = 50; break;}
+        case 6: {startYear = 51; endYear = 60; break;}
+        case 7: {startYear = 61; endYear = 70; break;}
+        case 8: {startYear = 71; endYear = 80; break;}
+      }
+      
+      ArrayList<Integer> data = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).gross;
+        data.add(m);
+      }
+      
+      ArrayList<Integer> data2 = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).budget;
+        data2.add(m);
+      }
+      
+      BarChart g1 = new BarChart(startYear, endYear);
+      g1.drawAxis();
+      g1.drawText(data, "(in hundred thousands)", "budget");
+      g1.drawBarChart(data, color(255, 0, 0));
+      g1.comparisonBars(data2);
       break;
     }
   }
@@ -157,6 +195,14 @@ void keyPressed()
       switch(key)
       {
         case '0': {subOption = 0; break;}
+        case '1': {graphOption = 1; break;}
+        case '2': {graphOption = 2; break;}
+        case '3': {graphOption = 3; break;}
+        case '4': {graphOption = 4; break;}
+        case '5': {graphOption = 5; break;}
+        case '6': {graphOption = 6; break;}
+        case '7': {graphOption = 7; break;}
+        case '8': {graphOption = 8; break;}
       }
     }
     if(option == 0)
