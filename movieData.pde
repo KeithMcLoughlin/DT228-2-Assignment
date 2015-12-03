@@ -33,6 +33,7 @@ void draw()
     case 0: {mainScreen(); break;}
     case 1: {option1(); break;}
     case 2: {option2(); break;}
+    case 3: {option3(); break;}
   }
 }
 
@@ -248,6 +249,80 @@ void option2()
   }
 }
 
+void option3()
+{
+  ArrayList<Integer> data = new ArrayList<Integer>();
+  String field = "";
+  
+  switch(subOption)
+  {
+    case 0:
+    {
+      String[] options = {"1.Budget", "2.Gross", "3.Critic Rating", "4.Audience Rating", "5.Runtime"};
+      Menu optionScreen = new Menu("Top 10's", options, backImage);
+      optionScreen.generate();
+      break;
+    }
+    case 1:
+    {
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).budget;
+        data.add(m);
+      }
+      field = "BUDGET";
+      break;
+    }
+    case 2:
+    {
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).gross;
+        data.add(m);
+      }
+      field = "GROSS";
+      break;
+    }
+    case 3:
+    {
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).criticRating;
+        data.add(m);
+      }
+      field = "CRITIC";
+      break;
+    }
+    case 4:
+    {
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).audienceRating;
+        data.add(m);
+      }
+      field = "AUDIENCE";
+      break;
+    }
+    case 5:
+    {
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).runtime;
+        data.add(m);
+      }
+      field = "RUNTIME";
+      break;
+    }
+  }
+  
+  if(subOption != 0)    //checks that one of the options were chosen
+  {
+    //image(graphBack, 0, 0, width, height);
+    background(0);
+    top10Display(data, field);
+  }
+}
+
 void keyPressed()
 {
     if(option > 0 && subOption == 0)
@@ -288,6 +363,13 @@ void keyPressed()
         case '3': {graphOption = 3; break;}
       }
     }
+    if(subOption > 0 && option == 3)
+    {
+      switch(key)
+      {
+        case '0': {subOption = 0; break;}
+      }
+    }
     if(option == 0)
     {
       switch(key)
@@ -297,4 +379,67 @@ void keyPressed()
         case '3': {option = 3; break;}
       }
     }
+}
+
+void top10Display(ArrayList<Integer> data, String lastField)
+{
+  int[] pos = calculateOrder(data);
+  float textSpace = width / 6.0f;
+  float gap = height / 12.0f;
+  String limitString;
+  int limit = 20;
+  
+  fill(255);
+  textAlign(CENTER);
+  textSize(20);
+  text("YEAR", textSpace, gap);
+  text("TITLE", textSpace * 2.5, gap);
+  text("GENRE", textSpace * 4, gap);
+  text(lastField, textSpace * 5, gap);
+  for(int i = 0; i < pos.length; i++)
+  {
+    if((movies.get(pos[i]).title).length() > limit)
+    {
+      limitString = (movies.get(pos[i]).title).substring(0, limit);
+    }
+    else
+    {
+      limitString = movies.get(pos[i]).title;
+    }
+    
+    text(movies.get(pos[i]).year, textSpace, gap * (i+2));
+    text(limitString, textSpace * 2.5, gap * (i+2));
+    text(movies.get(pos[i]).genre, textSpace * 4, gap * (i+2));
+    text(data.get(pos[i]), textSpace * 5, gap * (i+2));
+  }
+}
+ 
+int[] calculateOrder(ArrayList<Integer> data)
+{
+  int[] positions = new int[10];
+  
+  for(int i = 0; i < 10; i++)
+  {
+    int max = 0;
+    boolean inArray = false;
+    for(int j = 0; j < data.size(); j++)
+    {
+      if(data.get(j) > data.get(max))
+      {
+        for(int k = 0; k < positions.length; k++)
+        {
+          if(j == positions[k])
+          {
+            inArray = true;
+          }
+        }
+        if(inArray == false)
+        {
+          max = j;
+        }
+      }
+    }
+    positions[i] = max;
+  }
+  return positions;
 }
