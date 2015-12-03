@@ -12,7 +12,7 @@ class Area extends Graph
     beginShape();
     vertex(border + 1, height - border - 1);
     
-    stroke(c);
+    stroke(0);
     for (int i = 0; i < data.size(); i++)
     {
       float x = map(i, 0, data.size(), border, width - border);

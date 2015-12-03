@@ -6,6 +6,8 @@ int option, subOption, graphOption;
 //store image names
 String backImage, graphImage;
 
+Projector p;
+
 void setup()
 {
   size(800, 600);
@@ -19,6 +21,7 @@ void setup()
   graphOption = 1;
   backImage = "menuBackground.jpg";
   graphImage = "graphBackground.jpg";
+  p = new Projector();
 }
 
 void draw()
@@ -45,12 +48,12 @@ void loadMovieData()
 
 void mainScreen()
 {
-  String[] options = {"1.Barchart", "2.Trend", "3.Area"};
+  String[] options = {"1.Singular Data", "2.Comparisons", "3.Top 10's"};
   Menu mainScreen = new Menu("Main", options, backImage);
   mainScreen.generate();
 }
 
-//the singular field options where you can see each field of data as a trend graph, bar chart or area graph
+//the singular field option where you can see each field of data as a trend graph, bar chart or area graph
 void option1()
 {
   PImage graphBack = loadImage(graphImage);
@@ -147,7 +150,8 @@ void option1()
         BarChart g1 = new BarChart();
         g1.drawAxis();
         g1.drawText(data, verTitle, mainTitle);
-        g1.drawBarChart(data, color(255, 0, 0));
+        g1.drawBarChart(data, color(0, 0, 255));
+        //g1.filmBars(data);
         break;
       }
       //drawing the area
@@ -156,7 +160,7 @@ void option1()
         Area g1 = new Area();
         g1.drawAxis();
         g1.drawText(data, verTitle, mainTitle);
-        g1.drawAreaGraph(data, color(255, 0, 0));
+        g1.drawAreaGraph(data, color(0, 255, 0));
         break;
       }
     }//end switch
@@ -168,51 +172,41 @@ void option1()
   }//end if
 }//end option1()
 
+//the option where you can see many comparisons between the data
 void option2()
 {
+  ArrayList<Integer> data = new ArrayList<Integer>();
+  ArrayList<Integer> data2 = new ArrayList<Integer>();
   switch(subOption)
   {
     case 0:
     {
-      String[] options = {"1.Gross", "2.Budget"};
-      Menu optionScreen = new Menu("TrendGraphs", options, backImage);
+      String[] options = {"1.Budget to Gross", "2.Audience to Critic", "3.Genre to Budget/Gross", "4.Audience to Runtime"};
+      Menu optionScreen = new Menu("Comparisons", options, backImage);
       optionScreen.generate();
       break;
     }
     case 1:
     {
-      background(255);
-      ArrayList<Integer> data = new ArrayList<Integer>();
       for(int i = 0; i < movies.size(); i++)
       {
-        int m = movies.get(i).gross;
-        data.add(m);
+        int b = movies.get(i).budget;
+        int g = movies.get(i).gross;
+        data.add(b);
+        data2.add(g);
       }
-      
       Trend g1 = new Trend();
       g1.drawAxis();
-      g1.drawText(data, "(in millions)", "gross");
+      g1.drawText(data, "(in millions)", "Budget to Gross");
       g1.drawTrendGraph(data, color(255, 0, 0));
+      g1.drawTrendGraph(data2, color(0, 0, 255));
+      
       break;
     }
     case 2:
     {
-      background(255);
-      ArrayList<Integer> data = new ArrayList<Integer>();
-      for(int i = 0; i < movies.size(); i++)
-      {
-        int m = movies.get(i).budget;
-        data.add(m);
-      }
-      
-      Trend g1 = new Trend();
-      g1.drawAxis();
-      g1.drawText(data, "(in hundred thousands)", "budget");
-      g1.drawTrendGraph(data, color(255, 0, 0));
-      break;
-    }
-  }
-  /*switch(graphOption)
+      int startYear = 0, endYear = 10;
+      switch(graphOption)
       {
         case 1: {startYear = 0; endYear = 10; break;}
         case 2: {startYear = 11; endYear = 20; break;}
@@ -222,7 +216,36 @@ void option2()
         case 6: {startYear = 51; endYear = 60; break;}
         case 7: {startYear = 61; endYear = 70; break;}
         case 8: {startYear = 71; endYear = 80; break;}
-      }*/
+      }
+      
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int b = movies.get(i).criticRating;
+        int g = movies.get(i).audienceRating;
+        data.add(b);
+        data2.add(g);
+      }
+      BarChart g1 = new BarChart(startYear, endYear);
+      g1.drawAxis();
+      g1.drawText(data, "(Rating out of 100)", "Critic to Audience");
+      g1.drawBarChart(data, color(255, 0, 0));
+      g1.comparisonBars(data2, color(0, 255, 0));
+      break;
+    }
+    case 3:
+    {
+      p.render();
+      p.update();
+      
+      break;
+    }
+    case 4:
+    {
+      background(255);
+      
+      break;
+    }
+  }
 }
 
 void keyPressed()
@@ -240,7 +263,7 @@ void keyPressed()
         case '6': {subOption = 6; break;}
       }
     }
-    /*if(subOption > 0 && option == 2)  //for decade comparisons
+    if(subOption > 0 && option == 2)  //for decade comparisons
     {
       switch(key)
       {
@@ -254,7 +277,7 @@ void keyPressed()
         case '7': {graphOption = 7; break;}
         case '8': {graphOption = 8; break;}
       }
-    }*/
+    }
     if(subOption > 0 && option == 1)  //for changing graph styles
     {
       switch(key)
