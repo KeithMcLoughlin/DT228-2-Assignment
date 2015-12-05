@@ -210,13 +210,13 @@ void option2()
       switch(graphOption)
       {
         case 1: {startYear = 0; endYear = 10; break;}
-        case 2: {startYear = 11; endYear = 20; break;}
-        case 3: {startYear = 21; endYear = 30; break;}
-        case 4: {startYear = 31; endYear = 40; break;}
-        case 5: {startYear = 41; endYear = 50; break;}
-        case 6: {startYear = 51; endYear = 60; break;}
-        case 7: {startYear = 61; endYear = 70; break;}
-        case 8: {startYear = 71; endYear = 80; break;}
+        case 2: {startYear = 10; endYear = 20; break;}
+        case 3: {startYear = 20; endYear = 30; break;}
+        case 4: {startYear = 30; endYear = 40; break;}
+        case 5: {startYear = 40; endYear = 50; break;}
+        case 6: {startYear = 50; endYear = 60; break;}
+        case 7: {startYear = 60; endYear = 70; break;}
+        case 8: {startYear = 70; endYear = 80; break;}
       }
       
       for(int i = 0; i < movies.size(); i++)
@@ -417,29 +417,24 @@ void top10Display(ArrayList<Integer> data, String lastField)
 int[] calculateOrder(ArrayList<Integer> data)
 {
   int[] positions = new int[10];
+  int[] temp = new int[data.size()];
+  for(int i = 0; i < data.size(); i++)
+  {
+    temp[i] = data.get(i);
+  }
   
   for(int i = 0; i < 10; i++)
   {
     int max = 0;
-    boolean inArray = false;
     for(int j = 0; j < data.size(); j++)
     {
-      if(data.get(j) > data.get(max))
+      if(temp[j] >= temp[max])
       {
-        for(int k = 0; k < positions.length; k++)
-        {
-          if(j == positions[k])
-          {
-            inArray = true;
-          }
-        }
-        if(inArray == false)
-        {
-          max = j;
-        }
+        max = j;
       }
     }
     positions[i] = max;
+    temp[max] = 0;  //change its value so it will find the next biggest value
   }
   return positions;
 }
