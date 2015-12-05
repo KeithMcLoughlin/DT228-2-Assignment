@@ -7,9 +7,7 @@ class BarChart extends Graph
   //default constructor
   BarChart()
   {
-    super();
-    startYear = 0;
-    endYear = 81;
+    this(0, 81);
   }
   
   //parameterised constructor (which takes in start an end years of data)

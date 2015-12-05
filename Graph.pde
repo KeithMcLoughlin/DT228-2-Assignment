@@ -11,14 +11,7 @@ class Graph
   
   Graph()
   {
-    border = width * 0.1f;
-    horIntervals = 10;
-    verIntervals = 10;
-    horRange = (width - (border * 2.0f));
-    horGap = horRange / horIntervals;
-    verRange = height - (border * 2.0f);
-    verGap = verRange / verIntervals;
-    tick = border * 0.1f;
+   this(8, 10);
   }
   
   Graph(int hi, int vi)
@@ -26,7 +19,7 @@ class Graph
     border = width * 0.1f;
     horIntervals = hi;
     verIntervals = vi;
-    horRange = (width - (border * 2.0f));
+    horRange = width - (border * 2.0f);
     horGap = horRange / horIntervals;
     verRange = height - (border * 2.0f);
     verGap = verRange / verIntervals;
@@ -57,13 +50,14 @@ class Graph
     }
   }
   
-  void drawText(ArrayList<Integer> data, String verTitle, String mainTitle)
+  void drawText(ArrayList<Integer> data, ArrayList<Integer> hor, String verTitle, String mainTitle)
   {
     fill(0);
     float maxDataValue = calculateMax(data);
     float verDataGap = maxDataValue / verIntervals;
+    int horDataGap = hor.size() / horIntervals;
     
-    for (int i = 0 ; i <= verIntervals ; i ++)
+    for (int i = 0 ; i <= verIntervals; i ++)
     {
       float y = (height - border) - (i * verGap);
       int verLabel = (int)verDataGap * i;
@@ -72,15 +66,21 @@ class Graph
       textSize(12);
       text(verLabel, border - (tick * 2.0f), y);
     }
-    
-    for (int i = 0 ; i <=  horIntervals; i ++)
+    int counter = 0;
+    for (int i = 0; i < hor.size(); i += horDataGap)
     {
-      float x = border + (i * horGap);
-      float horLabel = height - (border * 0.5f);
+      float x = border + (counter * horGap);
+      int horLabel = hor.get(i);
+      counter ++;
+      
+      textAlign(CENTER);
+      textSize(12);
+      text(horLabel, x, (height - border) + (tick * 3.0f));
     }
     
     pushMatrix();
     translate(7, height/3);
+    textAlign(RIGHT, CENTER);
     textSize(15);
     rotate(-HALF_PI);
     text(verTitle, 0, 0);

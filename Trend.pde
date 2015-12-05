@@ -3,7 +3,7 @@ class Trend extends Graph
   //default constructor
   Trend()
   {
-    super(10, 10);
+    super(8, 10);
   }
   
   //parameterised constructor (takes in the number of horizontal and vertical intervals for the graph)

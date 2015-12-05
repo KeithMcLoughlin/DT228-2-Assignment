@@ -10,8 +10,11 @@ class Projector
   
   Projector()
   {
-    float x = width/2;
-    float y = height/2;
+    this(width / 2, height / 2);
+  }
+  
+  Projector(float x, float y)
+  {
     pos = new PVector(x,y);
     float cirX = pos.x + (pWidth * 0.15f);
     cirGap = pHeight * 0.75f;
@@ -20,11 +23,6 @@ class Projector
     cir2 = new PVector(cirX + (pWidth * 0.75f), cirY);
     theta = 0.0f;
     reel = loadImage("filmReel.png");
-  }
-  
-  Projector(float x, float y)
-  {
-    pos = new PVector(x,y);
   }
   
   void render()
