@@ -132,4 +132,19 @@ class Graph
     stroke(0);
     fill(0);
   }
+  
+  void highlight(float x1, float y1, float x2, float y2, int pos)
+  {
+    if(mouseX > border && mouseX < width - border && mouseY > border && mouseY < height - border)
+    {
+      if(mouseX > x1 && mouseX < x2)
+      {
+        fill(#FF9E1F);
+        ellipse(x1, y1, 15, 15);
+        textSize(12);
+        text(movies.get(pos).title, x1 + 20, y1 + 20);
+      }
+    }
+  }
+  
 }
