@@ -50,7 +50,7 @@ class Graph
     }
   }
   
-  void drawText(ArrayList<Integer> data, ArrayList<Integer> hor, String verTitle, String mainTitle)
+  void drawText(ArrayList<Integer> data, ArrayList<Integer> hor, String verTitle, String mainTitle, boolean barComp)
   {
     fill(0);
     float maxDataValue = calculateMax(data);
@@ -72,10 +72,16 @@ class Graph
       float x = border + (counter * horGap);
       int horLabel = hor.get(i);
       counter ++;
-      
-      textAlign(CENTER);
       textSize(12);
-      text(horLabel, x, (height - border) + (tick * 3.0f));
+      textAlign(CENTER);
+      if(barComp == false)
+      {
+        text(horLabel, x, (height - border) + (tick * 3.0f));
+      }
+      else
+      {
+        text(horLabel, x + (horGap * 0.5f), (height - border) + (tick * 3.0f));
+      }
     }
     
     pushMatrix();

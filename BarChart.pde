@@ -7,13 +7,13 @@ class BarChart extends Graph
   //default constructor
   BarChart()
   {
-    this(0, 81);
+    this(0, 81, 8, 10);
   }
   
   //parameterised constructor (which takes in start an end years of data)
-  BarChart(int s, int e)
+  BarChart(int s, int e, int hor, int ver)
   {
-    super();
+    super(hor, ver);
     startYear = s;
     endYear = e;
   }

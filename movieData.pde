@@ -32,8 +32,8 @@ void draw()
   {
     case 0: {mainScreen(); break;}
     case 1: {option1(); break;}
-    //case 2: {option2(); break;}
-    //case 3: {option3(); break;}
+    case 2: {option2(); break;}
+    case 3: {option3(); break;}
   }
 }
 
@@ -147,7 +147,7 @@ void option1()
       {
         Trend g1 = new Trend();
         g1.drawAxis();
-        g1.drawText(data, horLabels, verTitle, mainTitle);
+        g1.drawText(data, horLabels, verTitle, mainTitle, false);
         g1.drawTrendGraph(data, color(255, 0, 0));
         break;
       }
@@ -156,7 +156,7 @@ void option1()
       {
         BarChart g1 = new BarChart();
         g1.drawAxis();
-        g1.drawText(data, horLabels,  verTitle, mainTitle);
+        g1.drawText(data, horLabels,  verTitle, mainTitle, false);
         g1.drawBarChart(data, color(0, 0, 255));
         //g1.filmBars(data);
         break;
@@ -166,7 +166,7 @@ void option1()
       {
         Area g1 = new Area();
         g1.drawAxis();
-        g1.drawText(data, horLabels,  verTitle, mainTitle);
+        g1.drawText(data, horLabels,  verTitle, mainTitle, false);
         g1.drawAreaGraph(data, color(0, 255, 0));
         break;
       }
@@ -178,7 +178,7 @@ void option1()
     text("3.Area Graph", width * 0.75f, height * 0.99f);
   }//end if
 }//end option1()
-/*
+
 //the option where you can see many comparisons between the data
 void option2()
 {
@@ -202,9 +202,17 @@ void option2()
         data.add(b);
         data2.add(g);
       }
+      
+      ArrayList<Integer> horLabels = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = movies.get(i).year;
+        horLabels.add(m);
+      }
+      
       Trend g1 = new Trend();
       g1.drawAxis();
-      g1.drawText(data, "(in millions)", "Budget to Gross");
+      g1.drawText(data, horLabels, "(in millions)", "Budget to Gross", false);
       g1.drawTrendGraph(data, color(255, 0, 0));
       g1.drawTrendGraph(data2, color(0, 0, 255));
       
@@ -232,29 +240,60 @@ void option2()
         data.add(b);
         data2.add(g);
       }
-      BarChart g1 = new BarChart(startYear, endYear);
+      
+      ArrayList<Integer> horLabels = new ArrayList<Integer>();
+      for(int i = startYear; i < endYear; i++)
+      {
+        int m = movies.get(i).year;
+        horLabels.add(m);
+      }
+      
+      BarChart g1 = new BarChart(startYear, endYear, 10, 10);
       g1.drawAxis();
-      g1.drawText(data, "(Rating out of 100)", "Critic to Audience");
+      g1.drawText(data, horLabels, "(Rating out of 100)", "Critic to Audience", true);
       g1.drawBarChart(data, color(255, 0, 0));
       g1.comparisonBars(data2, color(0, 255, 0));
       break;
     }
     case 3:
     {
-      p.render();
-      p.update();
+      //TextGraph g1 = new TextGraph();
+      //g1.drawTextGraph(movies);
       
       break;
     }
     case 4:
     {
-      background(255);
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int a = movies.get(i).audienceRating;
+        int r = movies.get(i).runtime;
+        data.add(a);
+        data2.add(r);
+      }
       
+      int[] labels = new int[movies.size()];
+      ArrayList<Integer> horLabels = new ArrayList<Integer>();
+      for(int i = 0; i < movies.size(); i++)
+      {
+        labels[i] = movies.get(i).runtime;
+      }
+      labels = sort(labels);
+      for(int i = 0; i < movies.size(); i++)
+      {
+        int m = labels[i];
+        horLabels.add(m);
+      }
+      
+      Scatter g1 = new Scatter();
+      g1.drawAxis();
+      g1.drawText(data, horLabels, "(Rating out of 100)", "Critic to Audience", false);
+      g1.drawScatterPlot(data, data2);
       break;
     }
   }
 }
-*//*
+
 void option3()
 {
   ArrayList<Integer> data = new ArrayList<Integer>();
@@ -328,7 +367,7 @@ void option3()
     top10Display(data, field);
   }
 }
-*/
+
 void keyPressed()
 {
     if(option > 0 && subOption == 0)
