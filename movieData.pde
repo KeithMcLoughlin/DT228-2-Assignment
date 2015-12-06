@@ -149,6 +149,7 @@ void option1()
         g1.drawAxis();
         g1.drawText(data, horLabels, verTitle, mainTitle, false);
         g1.drawTrendGraph(data, color(255, 0, 0));
+        g1.drawAvgLine(data);
         break;
       }
       //drawing the bar chart
@@ -158,6 +159,7 @@ void option1()
         g1.drawAxis();
         g1.drawText(data, horLabels,  verTitle, mainTitle, false);
         g1.drawBarChart(data, color(0, 0, 255));
+        g1.drawAvgLine(data);
         //g1.filmBars(data);
         break;
       }
@@ -168,6 +170,7 @@ void option1()
         g1.drawAxis();
         g1.drawText(data, horLabels,  verTitle, mainTitle, false);
         g1.drawAreaGraph(data, color(0, 255, 0));
+        g1.drawAvgLine(data);
         break;
       }
     }//end switch
@@ -188,7 +191,7 @@ void option2()
   {
     case 0:
     {
-      String[] options = {"1.Budget to Gross", "2.Audience to Critic", "3.Genre to Budget/Gross", "4.Audience to Runtime"};
+      String[] options = {"1.Budget to Gross", "2.Aud to Critic", "3.Genre to Budget/Gross", "4.Aud to Runtime"};
       Menu optionScreen = new Menu("Comparisons", options, backImage);
       optionScreen.generate();
       break;
@@ -247,7 +250,11 @@ void option2()
         int m = movies.get(i).year;
         horLabels.add(m);
       }
-      
+      textSize(15);
+      fill(255, 0, 0);
+      text("Critic Rating = Red", width * 0.25f, height * 0.99f); 
+      fill(0, 255, 0);
+      text("Audience Rating = Green", width * 0.5f, height * 0.99f);
       BarChart g1 = new BarChart(startYear, endYear, 10, 10);
       g1.drawAxis();
       g1.drawText(data, horLabels, "(Rating out of 100)", "Critic to Audience", true);
@@ -257,8 +264,9 @@ void option2()
     }
     case 3:
     {
-      //TextGraph g1 = new TextGraph();
-      //g1.drawTextGraph(movies);
+      background(#7EF25F);
+      TextGraph g1 = new TextGraph();
+      g1.drawTextGraph(movies);
       
       break;
     }
@@ -287,7 +295,7 @@ void option2()
       
       Scatter g1 = new Scatter();
       g1.drawAxis();
-      g1.drawText(data, horLabels, "(Rating out of 100)", "Critic to Audience", false);
+      g1.drawText(data, horLabels, "(Rating out of 100)", "Aud to Runtime", false);
       g1.drawScatterPlot(data, data2);
       break;
     }
@@ -383,7 +391,7 @@ void keyPressed()
         case '6': {subOption = 6; break;}
       }
     }
-    if(subOption > 0 && option == 2)  //for decade comparisons
+    if(subOption == 2 && option == 2)  //for decade comparisons
     {
       switch(key)
       {
@@ -396,6 +404,15 @@ void keyPressed()
         case '6': {graphOption = 6; break;}
         case '7': {graphOption = 7; break;}
         case '8': {graphOption = 8; break;}
+      }
+    }
+    if(subOption != 2 && option == 2)  //for text graphs
+    {
+      switch(key)
+      {
+        case '0': {subOption = 0; graphOption = 1; break;}
+        case '1': {graphOption = 1; break;}
+        case '2': {graphOption = 2; break;}
       }
     }
     if(subOption > 0 && option == 1)  //for changing graph styles
@@ -452,6 +469,7 @@ void top10Display(ArrayList<Integer> data, String lastField)
       limitString = movies.get(pos[i]).title;
     }
     
+    text(i+1 + ".", textSpace * 0.5f, gap * (i+2));
     text(movies.get(pos[i]).year, textSpace, gap * (i+2));
     text(limitString, textSpace * 2.5, gap * (i+2));
     text(movies.get(pos[i]).genre, textSpace * 4, gap * (i+2));

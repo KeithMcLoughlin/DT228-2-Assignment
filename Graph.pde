@@ -114,4 +114,22 @@ class Graph
       
       return max;
   }
+  
+  void drawAvgLine(ArrayList<Integer> data)
+  {
+    int dataSum = 0;
+    float max = calculateMax(data);
+    for(int i = 0; i < data.size(); i++)
+    {
+      dataSum += data.get(i);
+    }
+    float y = map(dataSum / data.size(), 0, max, height - border, border);
+    stroke(255, 0, 255);
+    fill(255, 0, 255);
+    line(border, y, width - border, y);
+    textSize(10);
+    text("Average", border + 20, y - 5);
+    stroke(0);
+    fill(0);
+  }
 }

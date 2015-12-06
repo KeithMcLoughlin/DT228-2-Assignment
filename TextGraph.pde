@@ -1,6 +1,6 @@
 class TextGraph extends Graph
 {
-  /*int budgetSum, grossSum;
+  int budgetSum, grossSum;
   
   TextGraph()
   {
@@ -42,37 +42,76 @@ class TextGraph extends Graph
       gross.add(grossSum / counter);
     }
     
-    float textGap = height / genreList.size() + 1;
+    float textGap = height / (genreList.size() + 1);
     int maxSize = 80;
-    float ratio = maxSize / calculateMax(gross);
-    
-    for(int i = 0; i < genreList.size(); i++)
+    float ratio = 0;
+
+    switch(graphOption){
+    case 1: 
     {
-      textSize(gross.get(i) * ratio);
-      println(gross.get(i) * ratio);
-      text(genreList.get(i), width / 2, (textGap * i) + 10);
+      ratio = maxSize / calculateMax(gross);
+      ArrayList<String> genres = sortGenre(genreList, gross);
+      for(int i = 0; i < genres.size(); i++)
+      {
+        textSize(gross.get(i) * ratio);
+        if(mouseY > (textGap * i) && mouseY < (textGap * (i+1)))
+        {
+          textSize(10);
+          text("Avg Gross: " + gross.get(i) + " million", mouseX + 10, mouseY);
+          textSize(maxSize + 2);
+        }
+        text(genres.get(i), width / 2, (textGap * i) + 80);
+      }
+      break;
     }
+    case 2:
+    {
+      ratio = maxSize / calculateMax(budget);
+      ArrayList<String> genres = sortGenre(genreList, budget);
+      for(int i = 0; i < genres.size(); i++)
+      {
+        textSize(budget.get(i) * ratio);
+        if(mouseY > (textGap * i) && mouseY < (textGap * (i+1)))
+        {
+          textSize(10);
+          text("Avg Budget: " + budget.get(i) + " hundred thousand", mouseX + 10, mouseY);
+          textSize(maxSize + 2);
+        }
+        text(genres.get(i), width / 2, (textGap * i) + 80);
+      }
+      break;
+    }
+    }//end switch
   }
   
-  void sortGenre(StringList genre, ArrayList gross)
+  ArrayList<String> sortGenre(StringList genre, ArrayList<Integer> data)
   {
-    int temp = 0;
     ArrayList<String> genres = new ArrayList<String>();
+    int[] g = new int[data.size()];
+    int[] temp = new int[data.size()];
+    for(int i = 0; i < data.size(); i++)
+    {
+      temp[i] = data.get(i);
+    }
     
     for(int i = 0; i < genre.size(); i++)
     {
-      int max = i;
-      for(int j = i + 1; j < genre.size(); j++)
+      int max = 0;
+      for(int j = 0; j < data.size(); j++)
       {
-        if(gross.get(j) > gross.get(max))
+        if(temp[j] >= temp[max])
         {
           max = j;
         }
       }
-      temp = gross.get(i);
-      gross.set(i, gross.get(max));
-      gross.set(max, temp);
+      g[i] = temp[max];
       genres.add(genre.get(max));
+      temp[max] = 0;
     }
-  }*/
+    for(int i = 0; i < data.size(); i++)
+    {
+      data.set(i, g[i]);
+    }
+    return genres;
+  }
 }
