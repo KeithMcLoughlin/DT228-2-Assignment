@@ -187,6 +187,7 @@ void option2()
 {
   ArrayList<Integer> data = new ArrayList<Integer>();
   ArrayList<Integer> data2 = new ArrayList<Integer>();
+  PImage graphBack = loadImage(graphImage);
   switch(subOption)
   {
     case 0:
@@ -198,6 +199,7 @@ void option2()
     }
     case 1:
     {
+      image(graphBack, 0, 0, width, height);
       for(int i = 0; i < movies.size(); i++)
       {
         int b = movies.get(i).budget;
@@ -222,6 +224,7 @@ void option2()
     }
     case 2:
     {
+      image(graphBack, 0, 0, width, height);
       int startYear = 0, endYear = 10;
       switch(graphOption)
       {
@@ -271,6 +274,7 @@ void option2()
     }
     case 4:
     {
+      image(graphBack, 0, 0, width, height);
       for(int i = 0; i < movies.size(); i++)
       {
         int a = movies.get(i).audienceRating;
