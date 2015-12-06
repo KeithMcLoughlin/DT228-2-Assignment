@@ -147,4 +147,72 @@ class Graph
     }
   }
   
+  void drawComparisonText(ArrayList<Integer> data, ArrayList<Integer> data2, ArrayList<Integer> hor, String verTitle, String verTitle2, String mainTitle, boolean barComp)
+  {
+    fill(0);
+    float maxDataValue = calculateMax(data);
+    float maxDataValue2 = calculateMax(data2);
+    
+    float verDataGap = maxDataValue / (verIntervals / 2);
+    float verDataGap2 = maxDataValue2 / (verIntervals / 2);
+    int horDataGap = hor.size() / horIntervals;
+    
+    for (int i = 0 ; i <= verIntervals / 2; i ++)
+    {
+      float y = (height - border) - (i * verGap);
+      int verLabel = (int)verDataGap * i;
+  
+      textAlign(RIGHT, CENTER);
+      textSize(12);
+      text(verLabel, border - (tick * 2.0f), y);
+    }
+    int counter = verIntervals / 2;
+    int counter2 = 0;
+    for (int i = (verIntervals / 2) + 1; i <= verIntervals; i ++)
+    {
+      float y = (height - border - verGap) - (counter * verGap);
+      int verLabel = (int)verDataGap2 * counter2;
+  
+      textAlign(RIGHT, CENTER);
+      textSize(12);
+      text(verLabel, border - (tick * 2.0f), y);
+      counter++;
+      counter2++;
+    }
+    
+    counter = 0;
+    for (int i = 0; i < hor.size(); i += horDataGap)
+    {
+      float x = border + (counter * horGap);
+      int horLabel = hor.get(i);
+      counter ++;
+      textSize(12);
+      textAlign(CENTER);
+      if(barComp == false)
+      {
+        text(horLabel, x, (height - border) + (tick * 3.0f));
+      }
+      else
+      {
+        text(horLabel, x + (horGap * 0.5f), (height - border) + (tick * 3.0f));
+      }
+    }
+    
+    pushMatrix();
+    translate(7, height - border - (verRange * 0.5f));
+    textAlign(RIGHT, CENTER);
+    textSize(15);
+    rotate(-HALF_PI);
+    text(verTitle, 0, 0);
+    text(verTitle2, (verRange * 0.4f), 0);
+    popMatrix();
+    
+    //main title
+    fill(0);
+    rect(width * 0.33f, height * 0.01f, width * 0.33f, 50);
+    fill(#B814F5);
+    textSize(30);
+    textAlign(CENTER);
+    text(mainTitle, width * 0.33f, height * 0.01f, width * 0.33f, 50); 
+  }
 }

@@ -213,11 +213,10 @@ void option2()
         horLabels.add(m);
       }
       
-      Trend g1 = new Trend();
+      Trend g1 = new Trend(8, 22);
       g1.drawAxis();
-      g1.drawText(data, horLabels, "(in millions)", "Budget to Gross", false);
-      g1.drawTrendGraph(data, color(255, 0, 0));
-      g1.drawTrendGraph(data2, color(0, 0, 255));
+      g1.drawComparisonText(data, data2, horLabels, "(in hundred thousands)", "(in millions)", "Budget to Gross", false);
+      g1.drawCompTrend(data, data2, color(255, 0, 0), color(0, 0, 255));
       
       break;
     }
