@@ -25,13 +25,14 @@ The first option allows you to see each field as a trend graph, bar chart or are
 The second option shows some comparisons such as:
 
 Budget - Gross as a comparison trend graph
-![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/BtoGScreenshot.png)
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/BtoGScreeshot.png)
 
 critic - audience as a comparison bar chart
 ![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/CtoAScreenshot.png)
 
 genre - budget/gross as a text graph which calculates the size of the text in relation to its average
 ![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/textScreenshot.png)
+
 when you hover over the text it makes it bigger so its more readable and also displays the average beside the mouse
 
 audience - runtime as a scatter plot
