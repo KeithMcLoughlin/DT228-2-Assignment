@@ -14,4 +14,4 @@ Advanced Features:
 Animations I was thinking of doing include those rolls of film rolling out and an animated film projector which displays the number 1 spot in the top 10's section.
 I would like to read in the data into a class.
 
-(https://github.com/KeithMcLoughlin/DT228-2-Assignment/mainScreenshot "Screenshot of main menu")
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/mainScreenshot.png)
