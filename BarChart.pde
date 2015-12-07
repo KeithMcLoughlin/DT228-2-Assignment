@@ -22,7 +22,7 @@ class BarChart extends Graph
   void drawBarChart(ArrayList<Integer> data, color c)
   {
     float maxValue = calculateMax(data);
-    int intervals = endYear - startYear;              //number of intervals on the bottom axis
+    int intervals = endYear - startYear;   //number of intervals on the bottom axis
     float rectWidth = (float) horRange / intervals;
     float ratio = verRange / maxValue;
     float x = border;
@@ -30,6 +30,7 @@ class BarChart extends Graph
     stroke(0);
     fill(c);
     
+    //the draww of the bars
     for(int i = startYear; i < endYear; i++)
     {
       rect(x, height - border, rectWidth, -(data.get(i) * ratio));
@@ -55,20 +56,4 @@ class BarChart extends Graph
       x += (rectWidth * 2);
     }
   }
-  
-  /*void filmBars(ArrayList<Integer> data)
-  {
-    PImage film = loadImage("filmStrip.jpg");
-    float maxValue = calculateMax(data);
-    int intervals = endYear - startYear;              //number of intervals on the bottom axis
-    float rectWidth = (float) horRange / intervals;
-    float ratio = verRange / maxValue;
-    float x = border;
-    
-    for(int i = startYear; i < endYear; i++)
-    {
-      image(film, x, height - border, rectWidth, -(data.get(i) * ratio));
-      x += rectWidth;
-    }
-  }*/
 }

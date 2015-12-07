@@ -21,13 +21,14 @@ void setup()
   graphOption = 1;
   backImage = "menuBackground.jpg";
   graphImage = "graphBackground.jpg";
-  p = new Projector(100, 100);
+  p = new Projector(35, 80, 50, 25);
 }
 
 void draw()
 { 
   background(255);
 
+  //menu options
   switch(option)
   {
     case 0: {mainScreen(); break;}
@@ -37,6 +38,7 @@ void draw()
   }
 }
 
+//loading in the dataset
 void loadMovieData()
 {
   String[] lines = loadStrings("movie_details.csv");
@@ -47,6 +49,7 @@ void loadMovieData()
   }
 }
 
+//the main menu screen
 void mainScreen()
 {
   String[] options = {"1.Singular Data", "2.Comparisons", "3.Top 10's"};
@@ -103,6 +106,7 @@ void option1()
         int m = movies.get(i).criticRating;
         data.add(m);
       }
+      verTitle = "(out of 100)";
       mainTitle = "Critic Rating";
       break;
     }
@@ -114,6 +118,7 @@ void option1()
         int m = movies.get(i).audienceRating;
         data.add(m);
       }
+      verTitle = "(out of 100)";
       mainTitle = "Audience Rating";
       break;
     }
@@ -131,14 +136,16 @@ void option1()
     }
   }//end switch
   
-  if(subOption != 0)    //checks that one of the options were chosen
+  if(subOption != 0)    //checks that one of the options was chosen
   {
+    //gets the labels to be displayed on the horizontal axis of the graphs
     ArrayList<Integer> horLabels = new ArrayList<Integer>();
     for(int i = 0; i < movies.size(); i++)
     {
       int m = movies.get(i).year;
       horLabels.add(m);
     }
+    
     image(graphBack, 0, 0, width, height);
     switch(graphOption)
     {
@@ -174,8 +181,10 @@ void option1()
         break;
       }
     }//end switch
+    
     textSize(15);
     fill(0);
+    //display different graph options on the bottom
     text("1.Trend Graph", width * 0.25f, height * 0.99f);
     text("2.Bar Chart", width * 0.5f, height * 0.99f);
     text("3.Area Graph", width * 0.75f, height * 0.99f);
@@ -192,13 +201,15 @@ void option2()
   {
     case 0:
     {
-      String[] options = {"1.Budget to Gross", "2.Aud to Critic", "3.Genre to Budget/Gross", "4.Aud to Runtime"};
+      //main menu for this option
+      String[] options = {"1.Budget to Gross", "2.Aud to Critic", "3.Genre to B/G", "4.Aud to Runtime"};
       Menu optionScreen = new Menu("Comparisons", options, backImage);
       optionScreen.generate();
       break;
     }
     case 1:
     {
+      //does a trend compare graph between gross and budget
       image(graphBack, 0, 0, width, height);
       for(int i = 0; i < movies.size(); i++)
       {
@@ -215,6 +226,12 @@ void option2()
         horLabels.add(m);
       }
       
+      textSize(15);
+      fill(255, 0, 0);
+      text("Budget = Red", width * 0.25f, height * 0.99f); 
+      fill(0, 0, 255);
+      text("Gross = Blue", width * 0.5f, height * 0.99f);
+      
       Trend g1 = new Trend(8, 22);
       g1.drawAxis();
       g1.drawComparisonText(data, data2, horLabels, "(in hundred thousands)", "(in millions)", "Budget to Gross", false);
@@ -224,8 +241,12 @@ void option2()
     }
     case 2:
     {
+      //bar chart compare graph between critic and audience rating where
+      //you can choose which group of ten years you want displayed
       image(graphBack, 0, 0, width, height);
       int startYear = 0, endYear = 10;
+      
+      //each of these keys correspond to a set of ten years e.g case 2 is the 2nd group of ten years
       switch(graphOption)
       {
         case 1: {startYear = 0; endYear = 10; break;}
@@ -252,11 +273,15 @@ void option2()
         int m = movies.get(i).year;
         horLabels.add(m);
       }
+      
+      //displays which bars correspond to which field
       textSize(15);
       fill(255, 0, 0);
       text("Critic Rating = Red", width * 0.25f, height * 0.99f); 
       fill(0, 255, 0);
       text("Audience Rating = Green", width * 0.5f, height * 0.99f);
+      
+      //drawing of the bar chart and the comparison bars
       BarChart g1 = new BarChart(startYear, endYear, 10, 10);
       g1.drawAxis();
       g1.drawText(data, horLabels, "(Rating out of 100)", "Critic to Audience", true);
@@ -266,6 +291,7 @@ void option2()
     }
     case 3:
     {
+      //text graph in relation to genre - budget/gross
       background(#7EF25F);
       TextGraph g1 = new TextGraph();
       g1.drawTextGraph(movies);
@@ -274,6 +300,7 @@ void option2()
     }
     case 4:
     {
+      //scatter plot compare the runtime of a movie to the audience rating of it
       image(graphBack, 0, 0, width, height);
       for(int i = 0; i < movies.size(); i++)
       {
@@ -283,7 +310,7 @@ void option2()
         data2.add(r);
       }
       
-      int[] labels = new int[movies.size()];
+      int[] labels = new int[movies.size()];  //array used to store all the runtimes to be sorted and used for the horizontal axis labels
       ArrayList<Integer> horLabels = new ArrayList<Integer>();
       for(int i = 0; i < movies.size(); i++)
       {
@@ -296,6 +323,7 @@ void option2()
         horLabels.add(m);
       }
       
+      //drawing the scatter plot graph
       Scatter g1 = new Scatter();
       g1.drawAxis();
       g1.drawText(data, horLabels, "(Rating out of 100)", "Aud to Runtime", false);
@@ -314,6 +342,7 @@ void option3()
   {
     case 0:
     {
+      //main menu for this option
       String[] options = {"1.Budget", "2.Gross", "3.Critic Rating", "4.Audience Rating", "5.Runtime"};
       Menu optionScreen = new Menu("Top 10's", options, backImage);
       optionScreen.generate();
@@ -321,6 +350,7 @@ void option3()
     }
     case 1:
     {
+      //get the budgets for the top 10 list
       for(int i = 0; i < movies.size(); i++)
       {
         int m = movies.get(i).budget;
@@ -331,6 +361,7 @@ void option3()
     }
     case 2:
     {
+      //get the gross incomes for the top 10 list
       for(int i = 0; i < movies.size(); i++)
       {
         int m = movies.get(i).gross;
@@ -341,6 +372,7 @@ void option3()
     }
     case 3:
     {
+      //get the critic ratings for the top 10 list
       for(int i = 0; i < movies.size(); i++)
       {
         int m = movies.get(i).criticRating;
@@ -351,6 +383,7 @@ void option3()
     }
     case 4:
     {
+      //get the audience ratings for the top 10 list
       for(int i = 0; i < movies.size(); i++)
       {
         int m = movies.get(i).audienceRating;
@@ -361,6 +394,7 @@ void option3()
     }
     case 5:
     {
+      //get the runtimes for the top 10 list
       for(int i = 0; i < movies.size(); i++)
       {
         int m = movies.get(i).runtime;
@@ -373,15 +407,19 @@ void option3()
   
   if(subOption != 0)    //checks that one of the options were chosen
   {
-    //image(graphBack, 0, 0, width, height);
     background(0);
+    p.render();
+    p.update();
+    //create the top 10 list
     top10Display(data, field);
   }
 }
 
+/*checks for where you are in the menus and changes different variables in relation to
+  where you are and what key was pressed*/
 void keyPressed()
 {
-    if(option > 0 && subOption == 0)
+    if(option > 0 && subOption == 0)  //for all main menus
     {
       switch(key)
       {
@@ -391,7 +429,6 @@ void keyPressed()
         case '3': {subOption = 3; break;}
         case '4': {subOption = 4; break;}
         case '5': {subOption = 5; break;}
-        case '6': {subOption = 6; break;}
       }
     }
     if(subOption == 2 && option == 2)  //for decade comparisons
@@ -428,14 +465,14 @@ void keyPressed()
         case '3': {graphOption = 3; break;}
       }
     }
-    if(subOption > 0 && option == 3)
+    if(subOption > 0 && option == 3)  //for top 10's
     {
       switch(key)
       {
         case '0': {subOption = 0; break;}
       }
     }
-    if(option == 0)
+    if(option == 0)  //for the main menu screen
     {
       switch(key)
       {
@@ -448,19 +485,22 @@ void keyPressed()
 
 void top10Display(ArrayList<Integer> data, String lastField)
 {
-  int[] pos = calculateOrder(data);
+  int[] pos = calculateOrder(data);  //get the order of the top 10 positions
   float textSpace = width / 6.0f;
   float gap = height / 12.0f;
-  String limitString;
+  String limitString;  //used for titles that are too long and will display a sub string of it
   int limit = 20;
   
   fill(255);
   textAlign(CENTER);
   textSize(20);
+  //headings
   text("YEAR", textSpace, gap);
   text("TITLE", textSpace * 2.5, gap);
   text("GENRE", textSpace * 4, gap);
   text(lastField, textSpace * 5, gap);
+  
+  //checking if the movie title is too long
   for(int i = 0; i < pos.length; i++)
   {
     if((movies.get(pos[i]).title).length() > limit)
@@ -472,6 +512,7 @@ void top10Display(ArrayList<Integer> data, String lastField)
       limitString = movies.get(pos[i]).title;
     }
     
+    //displaying the fields of each movie
     text(i+1 + ".", textSpace * 0.5f, gap * (i+2));
     text(movies.get(pos[i]).year, textSpace, gap * (i+2));
     text(limitString, textSpace * 2.5, gap * (i+2));
@@ -480,15 +521,19 @@ void top10Display(ArrayList<Integer> data, String lastField)
   }
 }
  
+/*used to calculate the order of the top 10 of a particular field*/
 int[] calculateOrder(ArrayList<Integer> data)
 {
   int[] positions = new int[10];
   int[] temp = new int[data.size()];
+  
+  //put all of the value in a temp array
   for(int i = 0; i < data.size(); i++)
   {
     temp[i] = data.get(i);
   }
   
+  //find each max value
   for(int i = 0; i < 10; i++)
   {
     int max = 0;
@@ -502,5 +547,5 @@ int[] calculateOrder(ArrayList<Integer> data)
     positions[i] = max;
     temp[max] = 0;  //change its value so it will find the next biggest value
   }
-  return positions;
+  return positions;  //return the positions of where the top 10 elements are
 }

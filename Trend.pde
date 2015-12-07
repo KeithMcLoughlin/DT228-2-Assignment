@@ -36,6 +36,7 @@ class Trend extends Graph
     highlight(x1, y1, x2, y2, data.size() - 1);
   }
   
+  //draws two trend graph, one on the top half of the graph and the other on the bottom half
   void drawCompTrend(ArrayList<Integer> data, ArrayList<Integer> data2, color c1, color c2)
   {
     float maxValue1 = calculateMax(data);

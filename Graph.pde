@@ -1,5 +1,6 @@
 class Graph
 {
+  //fields
   float border;
   int horIntervals;
   int verIntervals;
@@ -9,11 +10,13 @@ class Graph
   float verGap;
   float tick;
   
+  //default constructor
   Graph()
   {
    this(8, 10);
   }
   
+  //parameterised constructor - takes in horizonal and vertical intervals
   Graph(int hi, int vi)
   {
     border = width * 0.1f;
@@ -57,6 +60,7 @@ class Graph
     float verDataGap = maxDataValue / verIntervals;
     int horDataGap = hor.size() / horIntervals;
     
+    //labels on the vertical axis 
     for (int i = 0 ; i <= verIntervals; i ++)
     {
       float y = (height - border) - (i * verGap);
@@ -66,6 +70,8 @@ class Graph
       textSize(12);
       text(verLabel, border - (tick * 2.0f), y);
     }
+    
+    //labels on the horizontal axis
     int counter = 0;
     for (int i = 0; i < hor.size(); i += horDataGap)
     {
@@ -74,16 +80,18 @@ class Graph
       counter ++;
       textSize(12);
       textAlign(CENTER);
+      //check if it is a comparison bar chart
       if(barComp == false)
       {
-        text(horLabel, x, (height - border) + (tick * 3.0f));
+        text(horLabel, x, (height - border) + (tick * 3.0f));  //place the labels under the ticks
       }
       else
       {
-        text(horLabel, x + (horGap * 0.5f), (height - border) + (tick * 3.0f));
+        text(horLabel, x + (horGap * 0.5f), (height - border) + (tick * 3.0f));  //place the labels between the ticks
       }
     }
     
+    //writing the title for the vertical axis turned 90 degrees
     pushMatrix();
     translate(7, height/3);
     textAlign(RIGHT, CENTER);
@@ -92,7 +100,7 @@ class Graph
     text(verTitle, 0, 0);
     popMatrix();
     
-    //main title
+    //writing main title
     fill(0);
     rect(width * 0.33f, height * 0.01f, width * 0.33f, 50);
     fill(#B814F5);
@@ -101,22 +109,25 @@ class Graph
     text(mainTitle, width * 0.33f, height * 0.01f, width * 0.33f, 50); 
   }
   
+  //calculates the max value of a field
   float calculateMax(ArrayList<Integer> data)
   {
-      float max = data.get(0);
-      for (int i = 1; i < data.size(); i++)
+    float max = data.get(0);
+    for (int i = 1; i < data.size(); i++)
+    {
+      if (data.get(i) > max)
       {
-        if (data.get(i) > max)
-        {
-          max = data.get(i);
-        }
+        max = data.get(i);
       }
+    }
       
-      return max;
+    return max;
   }
   
+  //calculates the average of a field and draws a line on the graph indicating the average
   void drawAvgLine(ArrayList<Integer> data)
   {
+    //calculating the average
     int dataSum = 0;
     float max = calculateMax(data);
     for(int i = 0; i < data.size(); i++)
@@ -124,6 +135,8 @@ class Graph
       dataSum += data.get(i);
     }
     float y = map(dataSum / data.size(), 0, max, height - border, border);
+    
+    //drawing the line
     stroke(255, 0, 255);
     fill(255, 0, 255);
     line(border, y, width - border, y);
@@ -133,10 +146,13 @@ class Graph
     fill(0);
   }
   
+  //highlights the value on the graph and displays the title of the movie
   void highlight(float x1, float y1, float x2, float y2, int pos)
   {
+    //check if mouse is on the graph
     if(mouseX > border && mouseX < width - border && mouseY > border && mouseY < height - border)
     {
+      //check which point its at
       if(mouseX > x1 && mouseX < x2)
       {
         fill(#FF9E1F);
@@ -147,6 +163,7 @@ class Graph
     }
   }
   
+  //similar to drawText() but used to make the vertical axis split for two graphs
   void drawComparisonText(ArrayList<Integer> data, ArrayList<Integer> data2, ArrayList<Integer> hor, String verTitle, String verTitle2, String mainTitle, boolean barComp)
   {
     fill(0);

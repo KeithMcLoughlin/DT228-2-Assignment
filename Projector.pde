@@ -1,7 +1,8 @@
 class Projector
 {
+  //fields
   PVector pos;
-  float pWidth = 100, pHeight = 50;
+  float pWidth, pHeight;
   float cirGap;
   PVector cir1;
   PVector cir2;
@@ -10,11 +11,13 @@ class Projector
   
   Projector()
   {
-    this(width / 2, height / 2);
+    this(width / 2, height / 2, 100, 50);
   }
   
-  Projector(float x, float y)
+  Projector(float x, float y, float w, float h)
   {
+    pWidth = w;
+    pHeight = h;
     pos = new PVector(x,y);
     float cirX = pos.x + (pWidth * 0.15f);
     cirGap = pHeight * 0.75f;
@@ -25,9 +28,11 @@ class Projector
     reel = loadImage("filmReel.png");
   }
   
+  //draw the projector
   void render()
   {
     fill(0);
+    stroke(255);
     rect(pos.x, pos.y, pWidth, pHeight);
     rect(pos.x + pWidth, pos.y + (pHeight * 0.3f), pWidth * 0.1f, pHeight * 0.4f);
     fill(255);
@@ -35,12 +40,12 @@ class Projector
     ellipse(cir1.x, cir1.y, cirGap * 2, cirGap * 2);
     ellipse(cir2.x, cir2.y, cirGap * 2, cirGap * 2);
     strokeWeight(1);
+    stroke(0);
   }
   
+  //rotate the reels
   void update()
   {
-    //float imageX = cir1.x + sin(theta) * cirGap;
-    //float imageY = cir1.y - cos(theta) * cirGap;
     reel.resize((int)cirGap * 2, (int)cirGap * 2);
     pushMatrix();
     translate(cir1.x, cir1.y);
