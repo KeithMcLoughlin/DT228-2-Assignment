@@ -14,4 +14,28 @@ Advanced Features:
 Animations I was thinking of doing include those rolls of film rolling out and an animated film projector which displays the number 1 spot in the top 10's section.
 I would like to read in the data into a class.
 
+This is what my main menu screen looks like and all other menus are similar to this one
 ![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/mainScreenshot.png)
+
+The first option allows you to see each field as a trend graph, bar chart or area graph. It also highlights the point for the trend graph while displaying the title of that movie
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/trendScreenshot.png)
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/barScreenshot.png)
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/areaScreenshot.png)
+
+The second option shows some comparisons such as:
+
+Budget - Gross as a comparison trend graph
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/BtoGScreenshot.png)
+
+critic - audience as a comparison bar chart
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/CtoAScreenshot.png)
+
+genre - budget/gross as a text graph which calculates the size of the text in relation to its average
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/textScreenshot.png)
+when you hover over the text it makes it bigger so its more readable and also displays the average beside the mouse
+
+audience - runtime as a scatter plot
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/scatterScreenshot.png)
+
+The final option displays the top 10 of each field
+![ScreenShot](https://raw.github.com/KeithMcLoughlin/DT228-2-Assignment/master/top10Screenshot.png)
